@@ -1,0 +1,5 @@
+#!/bin/bash
+
+# This script sets kde desktop theme to breeze (light)
+
+lookandfeeltool -a 'org.kde.breeze.desktop' > /dev/null 2>&1

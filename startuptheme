@@ -1,0 +1,28 @@
+#!/bin/bash
+#
+# --------------- startuptheme ---------------
+#
+# This file is executed right after reboot by 
+# cron (take a look at /etc/cron.d/).
+#
+# If the current time is in light theme range
+# (i.e. LIGHT_TIME <= current_time < DARK_TIME)
+# the theme is set to light, otherwise (i.e 
+# DARK_TIME <= current_time < LIGHT_TIME)
+#
+
+# Default values
+LIGHT_TIME=$(date -d"07:00:00" +%s)
+DARK_TIME=$(date -d"19:00:00" +%s)
+
+# Custom values
+TIMINGS="/usr/local/bin/settheme/timings"
+
+# If a custom value is set it will overwrite the defaults
+[ ! -r "$TIMINGS" ] || . "$TIMINGS"
+
+if [[ $SEC_TIME -ge $LIGHT_START && $SEC_TIME -le $LIGHT_END ]]; then
+    lighttheme
+elif [[ $SEC_TIME -ge 0 && $SEC_TIME -le $DARK_END ]] || [[ $SEC_TIME -ge 68400 && $SEC_TIME -le 86399 ]]; then
+    darktheme
+fi
