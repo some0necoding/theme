@@ -1,5 +1,21 @@
 #!/bin/bash
+#
+# --------------- lighttheme ---------------
+#
+# This script can be used both to manually
+# set kde desktop theme to breeze (light) or 
+# to specify the time when it will be set
+# automatically.
+#
 
-# This script sets kde desktop theme to breeze (light)
+if [ -z "$1" ]; then
+	lookandfeeltool -a 'org.kde.breeze.desktop' &> /dev/null
+elif [ -n "$1" -a -n "$2" ]; then
 
-lookandfeeltool -a 'org.kde.breeze.desktop' > /dev/null 2>&1
+	# Check argument
+	[[ $1 -ne set ]] && echo "invalid command: $1"; exit 1
+
+	# Check good date format
+	[[ $2 =~ "^[0-9]{2}:[0-9][2]:[0-9][2]$" ]] || echo "$2 is not a valid date format. Use instead HH:MM:SS"; exit 1
+
+fi
