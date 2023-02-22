@@ -1,19 +1,23 @@
 #!/bin/bash
 #
-# --------------- startuptheme ---------------
+# --------------- onstartup ---------------
 #
 # This file is executed right after reboot by 
 # cron (take a look at /etc/cron.d/).
 #
 # If the current time is in light theme range
-# (i.e. LIGHT_TIME <= current_time < DARK_TIME)
-# the theme is set to light, otherwise (i.e 
-# DARK_TIME <= current_time < LIGHT_TIME)
+# the theme is set to light and viceversa.
 #
 
 # Default values
-LIGHT_TIME=$(date -d"07:00:00" +%s)
-DARK_TIME=$(date -d"19:00:00" +%s)
+S_TIME=$(date -d"00:00:00" +%s)
+E_TIME=$(date -d"23:59:59" +%s)
+L_TIME=$(date -d"07:00:00" +%s)
+D_TIME=$(date -d"19:00:00" +%s)
+
+# Commands
+SET_DARK="/usr/local/bin/darktheme"
+SET_LIGHT="/usr/local/bin/lighttheme"
 
 # Custom values
 TIMINGS="/usr/local/bin/settheme/timings"
@@ -21,8 +25,27 @@ TIMINGS="/usr/local/bin/settheme/timings"
 # If a custom value is set it will overwrite the defaults
 [ ! -r "$TIMINGS" ] || . "$TIMINGS"
 
-if [[ $SEC_TIME -ge $LIGHT_START && $SEC_TIME -le $LIGHT_END ]]; then
-    lighttheme
-elif [[ $SEC_TIME -ge 0 && $SEC_TIME -le $DARK_END ]] || [[ $SEC_TIME -ge 68400 && $SEC_TIME -le 86399 ]]; then
-    darktheme
+# Current time
+C_TIME=$(date +%s)
+
+if [ "$L_TIME" -lt "$D_TIME" ]; then
+	if [ "$S_TIME" -le "$C_TIME" -a "$L_TIME" -gt "$C_TIME" ] ||
+	   [ "$D_TIME" -le "$C_TIME" -a "$E_TIME" -ge "$C_TIME" ]; then
+		$SET_DARK	
+	fi
+
+	if [ "$L_TIME" -le "$C_TIME" -a "$D_TIME" -gt "$C_TIME" ]; then
+		$SET_LIGHT
+	fi
+fi
+
+if [ "$D_TIME" -lt "$L_TIME" ]; then
+	if [ "$S_TIME" -le "$C_TIME" -a "$D_TIME" -gt "$C_TIME" ] ||
+	   [ "$L_TIME" -le "$C_TIME" -a "$E_TIME" -ge "$C_TIME" ]; then
+		$SET_LIGHT
+	fi
+	
+	if [ "$D_TIME" -le "$C_TIME" -a "$L_TIME" -gt "$C_TIME" ]; then
+		$SET_DARK
+	fi
 fi
