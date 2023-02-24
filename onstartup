@@ -20,7 +20,7 @@ SET_DARK="/usr/local/bin/darktheme"
 SET_LIGHT="/usr/local/bin/lighttheme"
 
 # Custom values
-TIMINGS="/usr/local/bin/settheme/timings"
+TIMINGS="/home/${USER}/.local/share/settheme/timings"
 
 # If a custom value is set it will overwrite the defaults
 [ ! -r "$TIMINGS" ] || . "$TIMINGS"
