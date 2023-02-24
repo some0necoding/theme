@@ -35,7 +35,7 @@ elif [ -n "$1" -a -n "$2" ]; then
 	# Convert date in HH:MM:SS format into seconds
 	TIME=$(date -d"$2" +%s)
 
-	# If inserted date is equal to darktheme time, throw an error
+	# If inserted date is equal to darktheme date, throw an error
 	[[ $TIME -ne $D_TIME ]] || echo "lighttheme activation time cannot be the same as darktheme"; exit 0
 
 	# else set L_TIME to the inserted date
