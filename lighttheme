@@ -8,25 +8,37 @@
 # automatically.
 #
 
-TIMINGS="/usr/local/bin/settheme/timings"
+TIMINGS="/home/${USER}/.local/share/settheme/timings"
+
+mkfile() {
+
+	FILENAME=$(echo $1 | grep -oE "[a-zA-Z_\-\.]*$")
+	FOLDER=${1%$FILENAME}
+
+	mkdir -p "$FOLDER"
+	touch "$1"
+}
 
 if [ -z "$1" ]; then
 	lookandfeeltool -a 'org.kde.breeze.desktop' &> /dev/null
 elif [ -n "$1" -a -n "$2" ]; then
 
 	# Check argument
-	[[ $1 -ne set ]] && echo "invalid command: $1"; exit 1
+	[[ $1 -ne set ]] && echo "invalid command: $1"; exit 0
 
 	# Check good date format
-	[[ $2 =~ "^[0-9]{2}:[0-9][2]:[0-9][2]$" ]] || echo "$2 is not a valid date format. Use instead HH:MM:SS"; exit 1
+	[[ $2 =~ "^[0-9]{2}:[0-9][2]:[0-9][2]$" ]] || echo "$2 is not a valid date format. Use instead HH:MM:SS"; exit 0
 
 	# Check if timings file exists. If not, create it.
-	[[ -e $TIMINGS ]] || touch $TIMINGS
+	[[ -e $TIMINGS ]] || mkfile $TIMINGS
 
 	# Convert date in HH:MM:SS format into seconds
-	l_time=$(date -d"$2" +%s)
+	TIME=$(date -d"$2" +%s)
 
 	# If inserted date is equal to darktheme time, throw an error
+	[[ $TIME -ne $D_TIME ]] || echo "lighttheme activation time cannot be the same as darktheme"; exit 0
+
 	# else set L_TIME to the inserted date
+	sed -i 's/L_TIME=[0-9]*/L_TIME=${TIME}/g' $TIMINGS
 
 fi
