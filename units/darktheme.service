@@ -1,0 +1,6 @@
+[Unit]
+Description=Enable KDE breeze dark theme
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/darktheme
