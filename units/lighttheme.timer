@@ -1,0 +1,9 @@
+[Unit]
+Description=Timer to run lighttheme.service at certain time.
+
+[Timer]
+OnCalendar=*-*-* 07:00:00
+Persistent=true
+
+[Install]
+WantedBy=timers.target

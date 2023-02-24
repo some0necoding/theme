@@ -1,0 +1,9 @@
+[Unit]
+Description=Timer to run darktheme.service at certain time.
+
+[Timer]
+OnCalendar=*-*-* 19:00:00
+Persistent=true
+
+[Install]
+WantedBy=timers.target
