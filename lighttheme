@@ -27,7 +27,7 @@ mkfile() {
 [[ -z $1 ]] && { lookandfeeltool -a 'org.kde.breeze.desktop' &> /dev/null; exit 0; }
 
 # If argument set is provided, light theme activation time is set.
-if [[ -n $1 && -n $2 ]]; then
+[[ -n $1 && -n $2 ]] && {
 
 	# Check argument
 	[[ $1 == "set" ]] || { echo "invalid command: $1"; exit 0; }
@@ -53,4 +53,4 @@ if [[ -n $1 && -n $2 ]]; then
 
 	echo "light theme activation time successfully set to $2!"
 
-fi
+}
