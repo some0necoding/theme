@@ -1,6 +1,0 @@
-[Unit]
-Description=Enable KDE breeze light/dark theme based on current time
-
-[Service]
-Type=simple
-ExecStart=/usr/local/bin/onstartup
