@@ -1,3 +1,1 @@
-systemd has been chosen
-
-units will be saved in /etc/systemd/system directory
+utility to manage kde theme changes based on current time.
