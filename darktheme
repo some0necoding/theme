@@ -51,6 +51,8 @@ mkfile() {
 	# replace the existing one with the new one.
 	[[ $(grep -E "D_TIME=[0-9]*" $TIMINGS) ]] && sed -i 's/D_TIME=[0-9]*/D_TIME=${time}/' $TIMINGS || echo "D_TIME=${time}" >> $TIMINGS
 
+	# TODO: set time also for systemd units
+
 	echo "dark theme activation time successfully set to $2!"
 
 }

@@ -51,6 +51,8 @@ mkfile() {
 	# replace the existing one with the new one.
 	[[ $(grep -E "L_TIME=[0-9]*" $TIMINGS) ]] && sed -i 's/L_TIME=[0-9]*/L_TIME=${time}/' $TIMINGS || echo "L_TIME=${time}" >> $TIMINGS
 
+	# TODO: set time also for systemd units
+
 	echo "light theme activation time successfully set to $2!"
 
 }
