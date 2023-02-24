@@ -1,21 +1,22 @@
 #!/bin/bash
 #
-# --------------- onstartup ---------------
+#		--------------- onstartup ---------------
 #
-# This file is executed right after reboot by 
-# cron (take a look at /etc/cron.d/).
+#		This file is executed right after reboot by 
+#		cron (take a look at /etc/cron.d/).
 #
-# If the current time is in light theme range
-# the theme is set to light and viceversa.
+#		If the current time is in light theme range
+#		the theme is set to light and viceversa.
 #
+
 
 # Default values
-S_TIME=$(date -d"00:00:00" +%s)
-E_TIME=$(date -d"23:59:59" +%s)
-L_TIME=$(date -d"07:00:00" +%s)
-D_TIME=$(date -d"19:00:00" +%s)
+S_TIME=$(date -d"00:00:00" +%s) # Start of the day
+E_TIME=$(date -d"23:59:59" +%s) # End of the day
+L_TIME=$(date -d"07:00:00" +%s) # Light theme activation time
+D_TIME=$(date -d"19:00:00" +%s) # Dark theme activation time
 
-# Commands
+# Commands to change theme
 SET_DARK="/usr/local/bin/darktheme"
 SET_LIGHT="/usr/local/bin/lighttheme"
 
@@ -23,29 +24,27 @@ SET_LIGHT="/usr/local/bin/lighttheme"
 TIMINGS="/home/${USER}/.local/share/settheme/timings"
 
 # If a custom value is set it will overwrite the defaults
-[ ! -r "$TIMINGS" ] || . "$TIMINGS"
+[[ ! -r $TIMINGS ]] || . "$TIMINGS"
 
 # Current time
-C_TIME=$(date +%s)
+current_time=$(date +%s)
 
-if [ "$L_TIME" -lt "$D_TIME" ]; then
-	if [ "$S_TIME" -le "$C_TIME" -a "$L_TIME" -gt "$C_TIME" ] ||
-	   [ "$D_TIME" -le "$C_TIME" -a "$E_TIME" -ge "$C_TIME" ]; then
-		$SET_DARK	
-	fi
+[[ $L_TIME < $D_TIME ]] && {
 
-	if [ "$L_TIME" -le "$C_TIME" -a "$D_TIME" -gt "$C_TIME" ]; then
-		$SET_LIGHT
-	fi
-fi
+	# If 00:00:00 <= current_time < light_time or dark_time <= current_time <= 23:59:59
+	[[ ($S_TIME <= $current_time && $L_TIME > $current_time) || ($D_TIME <= $current_time && $E_TIME >= $current_time) ]] && $SET_DARK
 
-if [ "$D_TIME" -lt "$L_TIME" ]; then
-	if [ "$S_TIME" -le "$C_TIME" -a "$D_TIME" -gt "$C_TIME" ] ||
-	   [ "$L_TIME" -le "$C_TIME" -a "$E_TIME" -ge "$C_TIME" ]; then
-		$SET_LIGHT
-	fi
-	
-	if [ "$D_TIME" -le "$C_TIME" -a "$L_TIME" -gt "$C_TIME" ]; then
-		$SET_DARK
-	fi
-fi
+	# If light_time <= current_time < dark_time
+	[[ $L_TIME <= $current_time && $D_TIME > $current_time ]] && $SET_LIGHT
+
+}
+
+[[ $D_TIME < $L_TIME ]] && {
+
+	# If 00:00:00 <= current_time < dark_time or light_time <= current_time <= 23:59:59
+	[[ ($S_TIME <= $current_time && $D_TIME > $current_time) || ($L_TIME <= $current_time && $E_TIME >= $current_time) ]] && $SET_LIGHT
+
+	# If dar_time <= current_time < light_time
+	[[ $D_TIME <= $current_time && $L_TIME > $current_time ]] && $SET_DARK
+
+}
