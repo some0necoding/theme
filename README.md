@@ -1,1 +1,1 @@
-utility to manage kde theme changes based on current time.
+utility to handle light/dark theme changes in KDE.
