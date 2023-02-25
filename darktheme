@@ -9,7 +9,10 @@
 #
 
 
-TIMINGS="/home/${USER}/.local/share/settheme/timings"
+CMD_NAME="darktheme"
+#TIMINGS="/home/${USER}/.local/share/settheme/timings"
+DARKTHEME_TIMER="/home/${USER}/.config/systemd/user/darktheme.timer"
+LIGHTTHEME_TIMER="/home/${USER}/.config/systemd/user/lighttheme.timer"
 
 
 # mkfile creates a file and all parent directories.
