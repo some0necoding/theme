@@ -27,12 +27,14 @@ mkfile() {
 	local filename=$(basename $TIMINGS)
 	local folder=${1%$filename}
 
+	# Create folders
 	mkdir -p "$folder"
 
 	# Error checking
 	local ret_value=$?
 	[[ $ret_value != 0 ]] && return $ret_value
 
+	# Create file
 	touch "$1"
 
 	# Error checking
