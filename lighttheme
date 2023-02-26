@@ -29,11 +29,13 @@ mkfile() {
 
 	mkdir -p "$folder"
 
+	# Error checking
 	local ret_value=$?
 	[[ $ret_value != 0 ]] && return $ret_value
 
 	touch "$1"
-	
+
+	# Error checking
 	ret_value=$?
 	[[ $ret_value != 0 ]] && return $ret_value
 
@@ -66,6 +68,7 @@ get_time() {
 
 	return 0
 }
+
 
 #
 #	Set theme activation time.
@@ -108,14 +111,13 @@ set_time() {
 	# Check argument
 	[[ $1 == "set" ]] || { echo "invalid command: $1"; exit 0; }
 
+	get_time $DARKTHEME_TIMER
+
 	# If inserted date is equal to darktheme date, throw an error
-	[[ $time != $D_TIME ]] || { echo "lighttheme activation time cannot be the same as darktheme"; exit 0; }
+	[[ $2 != $D_TIME ]] || { echo "lighttheme activation time cannot be the same as darktheme"; exit 0; }
 
-	# If L_TIME line is not present add it, otherwise
-	# replace the existing one with the new one.
-	[[ $(grep -E "L_TIME=[0-9]*" $TIMINGS) ]] && sed -i 's/L_TIME=[0-9]*/L_TIME=${time}/' $TIMINGS || echo "L_TIME=${time}" >> $TIMINGS
-
-	# TODO: set time also for systemd units
+	# Set light theme activation time
+	set_time $LIGHTTHEME_TIMER $2
 
 	echo "light theme activation time successfully set to $2!"
 
