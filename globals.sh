@@ -7,6 +7,10 @@
 #
 
 
+# TODO: make this variables editable by user.
+LIGHT_THEME="org.kde.breeze.desktop"
+DARK_THEME="org.kde.breezedark.desktop"
+
 DARKTHEME_TIMER="/home/${USER}/.config/systemd/user/darktheme.timer"
 LIGHTTHEME_TIMER="/home/${USER}/.config/systemd/user/lighttheme.timer"
 
