@@ -9,9 +9,6 @@
 #
 
 
-CMD_NAME="lighttheme"
-
-
 # Source global variables and functions
 source globals.sh
 
