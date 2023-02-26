@@ -11,8 +11,10 @@
 
 CMD_NAME="lighttheme"
 
+
 # Source global variables and functions
 source globals.sh
+
 
 # If no arguments are provided the theme is changed to breeze light. TODO: move org.kde.breeze.desktop into a variable inside a config file and make it editable using this command
 [[ -z $1 ]] && { lookandfeeltool -a 'org.kde.breeze.desktop' &> /dev/null; exit 0; }
