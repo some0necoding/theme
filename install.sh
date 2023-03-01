@@ -7,7 +7,6 @@
 
 # TODO: check packages
 # TODO: put units in /home/${USER}/.config/systemd/user/
-# TODO: put commands in /usr/local/bin
 
 # Check desktop environment
 check_de() {
@@ -24,7 +23,32 @@ check_packages() {
 
 }
 
+# Copying commands in /usr/local/bin
 install_cmds() {
+
+	# TODO: use absolute paths
+	cp ./bin/lighttheme /usr/local/bin/lighttheme || {
+		echo cannot install binaries
+		return 1
+	}
+
+	# TODO: use variables
+	[[ -e /usr/local/bin/lighttheme ]] || {
+		echo cannot install binaries
+		return 1
+	}
+
+	# TODO: use absolute paths
+	cp ./bin/darktheme /usr/local/bin/darktheme || {
+		echo cannot install binaries
+		return 1
+	}
+
+	# TODO: use variables
+	[[ -e /usr/local/bin/darktheme ]] || {
+		echo cannot install binaries
+		return 1
+	}
 
 }
 
