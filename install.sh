@@ -27,6 +27,7 @@ check_packages() {
 install_cmds() {
 
 	# TODO: use absolute paths
+	# TODO: use variables
 	cp ./bin/lighttheme /usr/local/bin/lighttheme || {
 		echo cannot install binaries
 		return 1
@@ -39,6 +40,7 @@ install_cmds() {
 	}
 
 	# TODO: use absolute paths
+	# TODO: use variables
 	cp ./bin/darktheme /usr/local/bin/darktheme || {
 		echo cannot install binaries
 		return 1
