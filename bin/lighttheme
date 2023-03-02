@@ -12,6 +12,8 @@
 # Source global variables and functions
 source globals.sh
 
+# TODO: make this variables editable by user.
+LIGHT_THEME="org.kde.breeze.desktop"
 
 # If no arguments are provided the theme is changed to breeze light.
 [[ -z $1 ]] && { lookandfeeltool -a $LIGHT_THEME &> /dev/null; exit 0; }
