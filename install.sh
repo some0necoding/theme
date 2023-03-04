@@ -99,18 +99,14 @@ install_units() {
 				continue
 			}
 
+			[[ ! -e $unit_dst ]] && {
+				echo cannot install $(basename $unit) unit
+				continue
+			}
+
 		fi
 
-	# TODO: use variables
-	cp "./units/*" $SYSTEMD_DIR || {
-		echo cannot install systemd units
-		return 1
-	}
-
-	# TODO: if units with same name are already installed
-	#		ask the user if they want to overwrite them.
-
-	# TODO: check for good installation
+	done
 
 	return 0
 }
