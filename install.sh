@@ -5,7 +5,6 @@
 #		This script installs settheme utility.
 #
 
-# TODO: put units in /home/${USER}/.config/systemd/user/
 
 packages=( "bash" "systemd" "sed" "grep" "plasma-workspace" "coreutils" )
 
@@ -14,6 +13,8 @@ DARKTHEME_BIN="/usr/local/bin/darktheme"
 
 LIGHTTHEME_SRC="./bin/lighttheme"
 DARKTHEME_SRC="./bin/darktheme"
+
+SYSTEMD_DIR="/home/${USER}/.config/systemd/user/"
 
 # Check desktop environment.
 check_de() {
@@ -39,7 +40,7 @@ check_packages() {
 	return 0
 }
 
-# Copying commands in /usr/local/bin
+# Copying commands in /usr/local/bin/
 install_cmds() {
 
 	if ! command -v $LIGHTTHEME_BIN; then
@@ -71,6 +72,15 @@ install_cmds() {
 	return 0
 }
 
+# Copying units in /home/${USER}/.config/systemd/user/
 install_units() {
 
+	cp "./units/*" $SYSTEMD_DIR || {
+		echo cannot install systemd units
+		return 1
+	}
+
+	# TODO: check for good installation
+
+	return 0
 }
