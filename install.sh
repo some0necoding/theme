@@ -24,7 +24,7 @@ L_SERVICE_SRC="./bin/lighttheme.service"
 UNITS_SRC=( $D_TIMER_SRC $L_TIMER_SRC $D_SERVICE_SRC $L_SERVICE_SRC )
 
 # Check desktop environment.
-check_de() {
+function check_de() {
 
 	[[ $XDG_CURRENT_DESKTOP != "KDE" || $DESKTOP_SESSION != "plasma" ]] && {
 		echo "settheme works only on KDE plasma desktop"
@@ -35,7 +35,7 @@ check_de() {
 }
 
 # Check if packages are installed.
-check_packages() {
+function check_packages() {
 
 	for package in packages; do
 		if ! command -v $package; then
@@ -48,7 +48,7 @@ check_packages() {
 }
 
 # Copying commands in /usr/local/bin/
-install_cmds() {
+function install_cmds() {
 
 	if ! command -v $LIGHTTHEME_DST; then
 	
@@ -86,7 +86,7 @@ install_cmds() {
 }
 
 # Copying units in /home/${USER}/.config/systemd/user/
-install_units() {
+function install_units() {
 
 	for unit in $UNITS_SRC; do
 
@@ -109,4 +109,8 @@ install_units() {
 	done
 
 	return 0
+}
+
+function install_unit() {
+
 }
