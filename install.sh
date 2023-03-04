@@ -12,6 +12,9 @@ packages=( "bash" "systemd" "sed" "grep" "plasma-workspace" "coreutils" )
 LIGHTTHEME_BIN="/usr/local/bin/lighttheme"
 DARKTHEME_BIN="/usr/local/bin/darktheme"
 
+LIGHTTHEME_SRC="./bin/lighttheme"
+DARKTHEME_SRC="./bin/darktheme"
+
 # Check desktop environment.
 check_de() {
 
@@ -41,9 +44,7 @@ install_cmds() {
 
 	if ! command -v $LIGHTTHEME_BIN; then
 	
-		# TODO: use absolute paths
-		# TODO: use variables
-		cp ./bin/lighttheme $LIGHTTHEME_BIN || {
+		cp $LIGHTTHEME_SRC $LIGHTTHEME_BIN || {
 			echo cannot install binaries
 			return 1
 		}
@@ -56,9 +57,7 @@ install_cmds() {
 
 	if ! command -v $DARKTHEME_BIN; then
 	
-		# TODO: use absolute paths
-		# TODO: use variables
-		cp ./bin/darktheme $DARKTHEME_BIN || {
+		cp $DARKTHEME_SRC $DARKTHEME_BIN || {
 			echo cannot install binaries
 			return 1
 		}
