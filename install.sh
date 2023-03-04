@@ -14,17 +14,13 @@ DARKTHEME_DST="/usr/local/bin/darktheme"
 LIGHTTHEME_SRC="./bin/lighttheme"
 DARKTHEME_SRC="./bin/darktheme"
 
-D_TIMER_DST="/home/${USER}/.config/systemd/user/darktheme.timer"
-L_TIMER_DST="/home/${USER}/.config/systemd/user/lighttheme.timer"
-D_SERVICE_DST="/home/${USER}/.config/systemd/user/darktheme.service"
-L_SERVICE_DST="/home/${USER}/.config/systemd/user/lighttheme.service"
+SYSTEMD_DIR="/home/${USER}/.config/systemd/user"
 
 D_TIMER_SRC="./bin/darktheme.timer"
 L_TIMER_SRC="./bin/lighttheme.timer"
 D_SERVICE_SRC="./bin/darktheme.service"
 L_SERVICE_SRC="./bin/lighttheme.service"
 
-UNITS_DST=( $D_TIMER_DST $L_TIMER_DST $D_SERVICE_DST $L_SERVICE_DST )
 UNITS_SRC=( $D_TIMER_SRC $L_TIMER_SRC $D_SERVICE_SRC $L_SERVICE_SRC )
 
 # Check desktop environment.
@@ -91,6 +87,19 @@ install_cmds() {
 
 # Copying units in /home/${USER}/.config/systemd/user/
 install_units() {
+
+	for unit in $UNITS_SRC; do
+
+		unit_dst="$SYSTEMD_DIR/$(basename $unit)"
+
+		if [[ ! -e $unit_dst ]]; then
+			
+			cp $unit $unit_dst || {
+				echo cannot install $(basename $unit) unit
+				continue
+			}
+
+		fi
 
 	# TODO: use variables
 	cp "./units/*" $SYSTEMD_DIR || {
