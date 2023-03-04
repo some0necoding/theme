@@ -8,20 +8,24 @@
 
 packages=( "bash" "systemd" "sed" "grep" "plasma-workspace" "coreutils" )
 
-LIGHTTHEME_BIN="/usr/local/bin/lighttheme"
-DARKTHEME_BIN="/usr/local/bin/darktheme"
+LIGHTTHEME_DST="/usr/local/bin/lighttheme"
+DARKTHEME_DST="/usr/local/bin/darktheme"
 
 LIGHTTHEME_SRC="./bin/lighttheme"
 DARKTHEME_SRC="./bin/darktheme"
 
-SYSTEMD_DIR="/home/${USER}/.config/systemd/user/"
+D_TIMER_DST="/home/${USER}/.config/systemd/user/darktheme.timer"
+L_TIMER_DST="/home/${USER}/.config/systemd/user/lighttheme.timer"
+D_SERVICE_DST="/home/${USER}/.config/systemd/user/darktheme.service"
+L_SERVICE_DST="/home/${USER}/.config/systemd/user/lighttheme.service"
 
-D_TIMER="${SYSTEMD_DIR}/darktheme.timer"
-L_TIMER="${SYSTEMD_DIR}/lighttheme.timer"
-D_SERVICE="${SYSTEMD_DIR}/darktheme.service"
-L_SERVICE="${SYSTEMD_DIR}/lighttheme.service"
+D_TIMER_SRC="./bin/darktheme.timer"
+L_TIMER_SRC="./bin/lighttheme.timer"
+D_SERVICE_SRC="./bin/darktheme.service"
+L_SERVICE_SRC="./bin/lighttheme.service"
 
-UNITS=( $D_TIMER $L_TIMER $D_SERVICE $L_SERVICE )
+UNITS_DST=( $D_TIMER_DST $L_TIMER_DST $D_SERVICE_DST $L_SERVICE_DST )
+UNITS_SRC=( $D_TIMER_SRC $L_TIMER_SRC $D_SERVICE_SRC $L_SERVICE_SRC )
 
 # Check desktop environment.
 check_de() {
@@ -50,14 +54,14 @@ check_packages() {
 # Copying commands in /usr/local/bin/
 install_cmds() {
 
-	if ! command -v $LIGHTTHEME_BIN; then
+	if ! command -v $LIGHTTHEME_DST; then
 	
-		cp $LIGHTTHEME_SRC $LIGHTTHEME_BIN || {
+		cp $LIGHTTHEME_SRC $LIGHTTHEME_DST|| {
 			echo cannot install binaries
 			return 1
 		}
 
-		[[ -e $LIGHTTHEME_BIN ]] || {
+		[[ -e $LIGHTTHEME_DST ]] || {
 			echo cannot install binaries
 			return 1
 		}
@@ -66,14 +70,14 @@ install_cmds() {
 	# TODO: if a lighttheme command already exists 
 	#		ask the user if they want to overwrite it
 
-	if ! command -v $DARKTHEME_BIN; then
+	if ! command -v $DARKTHEME_DST; then
 	
-		cp $DARKTHEME_SRC $DARKTHEME_BIN || {
+		cp $DARKTHEME_SRC $DARKTHEME_DST || {
 			echo cannot install binaries
 			return 1
 		}
 
-		[[ -e $DARKTHEME_BIN ]] || {
+		[[ -e $DARKTHEME_DST ]] || {
 			echo cannot install binaries
 			return 1
 		}
