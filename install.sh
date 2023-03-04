@@ -16,6 +16,13 @@ DARKTHEME_SRC="./bin/darktheme"
 
 SYSTEMD_DIR="/home/${USER}/.config/systemd/user/"
 
+D_TIMER="${SYSTEMD_DIR}/darktheme.timer"
+L_TIMER="${SYSTEMD_DIR}/lighttheme.timer"
+D_SERVICE="${SYSTEMD_DIR}/darktheme.service"
+L_SERVICE="${SYSTEMD_DIR}/lighttheme.service"
+
+UNITS=( $D_TIMER $L_TIMER $D_SERVICE $L_SERVICE )
+
 # Check desktop environment.
 check_de() {
 
