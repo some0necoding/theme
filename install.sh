@@ -112,3 +112,13 @@ function install_units() {
 
 	return 0
 }
+
+
+check_de || exit 1
+
+check_packages || exit 1
+
+install $LIGHTTHEME_SRC $LIGHTTHEME_DST || exit 1
+install $DARKTHEME_SRC  $DARKTHEME_DST || exit 1
+
+install_units
