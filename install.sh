@@ -47,6 +47,19 @@ function check_packages() {
 	return 0
 }
 
+function copy() {
+			
+	cp $1 $2 || {
+		return 1
+	}
+
+	[[ ! -e $2 ]] && {
+		return 1
+	}
+
+	return 0
+}
+
 # Copying commands in /usr/local/bin/
 function install_cmds() {
 
@@ -107,19 +120,6 @@ function install_units() {
 		fi
 
 	done
-
-	return 0
-}
-
-function copy() {
-			
-	cp $1 $2 || {
-		return 1
-	}
-
-	[[ ! -e $2 ]] && {
-		return 1
-	}
 
 	return 0
 }
