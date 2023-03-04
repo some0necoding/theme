@@ -47,6 +47,10 @@ function check_packages() {
 	return 0
 }
 
+# Copy SOURCE to DESTINATION checking for success.
+#
+#	SYNTAX:		copy SOURCE DESTINATION
+#
 function copy() {
 			
 	cp $1 $2 || {
@@ -60,59 +64,36 @@ function copy() {
 	return 0
 }
 
-# TODO: this function can be optimized generalizing the code
-#		and writing only half.
-# Copying commands in /usr/local/bin/
-function install_cmds() {
+# Copy SOURCE to DESTINATION handling exceptions.
+#
+#	SYNTAX:		install SOURCE DESTINATION
+#
+function install() {
 
-	if ! command -v $LIGHTTHEME_DST; then
+	if [[ ! -e $2 ]]; then
 
-		copy $LIGHTTHEME_SRC $LIGHTTHEME_DST || {
-			echo cannot install binaries
+		copy $1 $2 || {
+			echo cannot install $2
 			return 1
 		}
 
 	else 
 
-		echo $LIGHTTHEME_DST already exist
+		echo $2 already exist
 		echo -n "do you want to overwrite this file? [y/N]: "
 
 		read input
 
 		if [[ $input == "y" || $input == "Y" ]]; then
 
-			copy $LIGHTTHEME_SRC $LIGHTTHEME_DST || {
-				echo cannot install binaries
+			copy $1 $2 || {
+				echo cannot install $2
 				return 1
 			}
 
 		fi
 	fi
 
-	if ! command -v $DARKTHEME_DST; then
-	
-		copy $DARKTHEME_SRC $DARKTHEME_DST || {
-			echo cannot install binaries
-			return 1
-		}
-
-	else 
-
-		echo $DARKTHEME_SRC already exist
-		echo -n "do you want to overwrite this file? [y/N]: "
-
-		read input
-
-		if [[ $input == "y" || $input == "Y" ]]; then
-			
-			copy $DARKTHEME_SRC $DARKTHEME_DST || {
-				echo cannot install binaries
-				return 1
-			}
-
-		fi
-	fi
-	
 	return 0
 }
 
@@ -123,29 +104,10 @@ function install_units() {
 
 		unit_dst="$SYSTEMD_DIR/$(basename $unit)"
 
-		if [[ ! -e $unit_dst ]]; then
+		install $unit $unit_dst || {
+			continue
+		}
 
-			copy $unit $unit_dst || {
-				echo cannot install $(basename $unit) unit
-				continue
-			}
-
-		else 
-
-			echo $unit_dst already exist
-			echo -n "do you want to overwrite this file? [y/N]: "
-
-			read input
-
-			if [[ $input == "y" || $input == "Y" ]]; then
-				
-				copy $unit $unit_dst || {
-					echo cannot install $(basename $unit) unit
-					continue
-				}
-
-			fi
-		fi
 	done
 
 	return 0
