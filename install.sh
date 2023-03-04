@@ -111,6 +111,15 @@ function install_units() {
 	return 0
 }
 
-function install_unit() {
+function copy() {
+			
+	cp $1 $2 || {
+		return 1
+	}
 
+	[[ ! -e $2 ]] && {
+		return 1
+	}
+
+	return 0
 }
