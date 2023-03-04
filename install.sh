@@ -106,19 +106,28 @@ function install_units() {
 		unit_dst="$SYSTEMD_DIR/$(basename $unit)"
 
 		if [[ ! -e $unit_dst ]]; then
-			
-			cp $unit $unit_dst || {
+
+			copy $unit $unit_dst || {
 				echo cannot install $(basename $unit) unit
 				continue
 			}
 
-			[[ ! -e $unit_dst ]] && {
-				echo cannot install $(basename $unit) unit
-				continue
-			}
+		else 
 
+			echo $unit_dst already exist
+			echo -n "do you want to overwrite this file? [y/N]: "
+
+			read input
+
+			if [[ $input == "y" || $input == "Y" ]]; then
+				
+				copy $unit $unit_dst || {
+					echo cannot install $(basename $unit) unit
+					continue
+				}
+
+			fi
 		fi
-
 	done
 
 	return 0
