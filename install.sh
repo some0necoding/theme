@@ -56,6 +56,9 @@ install_cmds() {
 		}
 	fi
 
+	# TODO: if a lighttheme command already exists 
+	#		ask the user if they want to overwrite it
+
 	if ! command -v $DARKTHEME_BIN; then
 	
 		cp $DARKTHEME_SRC $DARKTHEME_BIN || {
@@ -68,6 +71,9 @@ install_cmds() {
 			return 1
 		}
 	fi
+	
+	# TODO: if a lighttheme command already exists 
+	#		ask the user if they want to overwrite it
 
 	return 0
 }
