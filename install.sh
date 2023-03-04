@@ -56,7 +56,7 @@ install_cmds() {
 
 	if ! command -v $LIGHTTHEME_DST; then
 	
-		cp $LIGHTTHEME_SRC $LIGHTTHEME_DST|| {
+		cp $LIGHTTHEME_SRC $LIGHTTHEME_DST || {
 			echo cannot install binaries
 			return 1
 		}
