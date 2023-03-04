@@ -60,41 +60,59 @@ function copy() {
 	return 0
 }
 
+# TODO: this function can be optimized generalizing the code
+#		and writing only half.
 # Copying commands in /usr/local/bin/
 function install_cmds() {
 
 	if ! command -v $LIGHTTHEME_DST; then
-	
-		cp $LIGHTTHEME_SRC $LIGHTTHEME_DST || {
+
+		copy $LIGHTTHEME_SRC $LIGHTTHEME_DST || {
 			echo cannot install binaries
 			return 1
 		}
 
-		[[ -e $LIGHTTHEME_DST ]] || {
-			echo cannot install binaries
-			return 1
-		}
+	else 
+
+		echo $LIGHTTHEME_DST already exist
+		echo -n "do you want to overwrite this file? [y/N]: "
+
+		read input
+
+		if [[ $input == "y" || $input == "Y" ]]; then
+
+			copy $LIGHTTHEME_SRC $LIGHTTHEME_DST || {
+				echo cannot install binaries
+				return 1
+			}
+
+		fi
 	fi
-
-	# TODO: if a lighttheme command already exists 
-	#		ask the user if they want to overwrite it
 
 	if ! command -v $DARKTHEME_DST; then
 	
-		cp $DARKTHEME_SRC $DARKTHEME_DST || {
+		copy $DARKTHEME_SRC $DARKTHEME_DST || {
 			echo cannot install binaries
 			return 1
 		}
 
-		[[ -e $DARKTHEME_DST ]] || {
-			echo cannot install binaries
-			return 1
-		}
+	else 
+
+		echo $DARKTHEME_SRC already exist
+		echo -n "do you want to overwrite this file? [y/N]: "
+
+		read input
+
+		if [[ $input == "y" || $input == "Y" ]]; then
+			
+			copy $DARKTHEME_SRC $DARKTHEME_DST || {
+				echo cannot install binaries
+				return 1
+			}
+
+		fi
 	fi
 	
-	# TODO: if a lighttheme command already exists 
-	#		ask the user if they want to overwrite it
-
 	return 0
 }
 
