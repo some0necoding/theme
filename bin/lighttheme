@@ -15,7 +15,8 @@ LIGHTTHEME_TIMER="/home/${USER}/.config/systemd/user/lighttheme.timer"
 # TODO: make this variables editable by user.
 LIGHT_THEME="org.kde.breeze.desktop"
 
-#
+CURRENT_THEME="/home/${USER}/.config/kdedefaults/package"
+
 #	Get theme activation time.
 #
 #	SYNTAX:		get_time PATH_TO_TIMER
@@ -43,7 +44,6 @@ get_time() {
 }
 
 
-#
 #	Set theme activation time.
 #
 #	SYNTAX:		set_time PATH_TO_TIMER TIME
@@ -81,8 +81,29 @@ set_time() {
 }
 
 
+# Set theme ensuring it actually changes
+#
+#	SYNTAX:		set_theme THEME
+#
+function set_theme() {
+	
+	current_theme=$(cat $CURRENT_THEME)
+
+	while [[ $current_them != $1 ]]; do
+
+		lookandfeeltool -a $1 &> /dev/null; exit 0; 
+
+		current_theme=$(cat $CURRENT_THEME)
+
+	done
+
+}
+
 # If no arguments are provided the theme is changed to breeze light.
-[[ -z $1 ]] && { lookandfeeltool -a $LIGHT_THEME &> /dev/null; exit 0; }
+[[ -z $1 ]] && { 
+	set_theme $LIGHT_THEME
+	exit 0
+}
 
 # If argument set is provided, light theme activation time is set.
 [[ -n $1 && -n $2 ]] && {
