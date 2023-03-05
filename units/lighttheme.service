@@ -3,4 +3,5 @@ Description=Enable KDE breeze (light) theme
 
 [Service]
 Type=simple
+ExecStartPre=/bin/sleep 5
 ExecStart=/usr/local/bin/theme light

@@ -3,4 +3,5 @@ Description=Enable KDE breeze dark theme
 
 [Service]
 Type=simple
+ExecStartPre=/bin/sleep 5
 ExecStart=/usr/local/bin/theme dark
