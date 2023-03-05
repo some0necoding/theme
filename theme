@@ -93,7 +93,7 @@ function set_theme() {
 
 	while [[ $current_them != $1 ]]; do
 
-		lookandfeeltool -a $1 &> /dev/null; exit 0; 
+		lookandfeeltool -a $1 &> /dev/null
 
 		current_theme=$(cat $CURRENT_THEME)
 
