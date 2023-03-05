@@ -17,7 +17,7 @@ DARK_THEME="org.kde.breezedark.desktop"
 
 CURRENT_THEME="/home/${USER}/.config/kdedefaults/package"
 
-# Get theme activation time.
+#	Get theme activation time.
 #
 #	SYNTAX:		get_time PATH_TO_TIMER
 #
@@ -44,7 +44,7 @@ function get_time() {
 }
 
 
-# Set theme activation time.
+#	Set theme activation time.
 #
 #	SYNTAX:		set_time PATH_TO_TIMER TIME
 #
@@ -80,7 +80,7 @@ function set_time() {
 	return 0
 }
 
-# Set theme ensuring it actually changes
+#	Set theme ensuring it actually changes
 #
 #	SYNTAX:		set_theme THEME
 #

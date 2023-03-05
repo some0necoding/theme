@@ -81,7 +81,7 @@ set_time() {
 }
 
 
-# Set theme ensuring it actually changes
+#	Set theme ensuring it actually changes
 #
 #	SYNTAX:		set_theme THEME
 #
