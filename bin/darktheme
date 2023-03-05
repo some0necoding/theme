@@ -101,6 +101,7 @@ function set_theme() {
 # If no arguments are provided the theme is changed to breeze dark.
 [[ -z $1 ]] && {
 	set_theme $DARK_THEME
+	exit 0
 }
 
 # If argument set is provided, dark theme activation time is set.
