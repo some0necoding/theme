@@ -3,4 +3,4 @@ Description=Enable KDE breeze (light) theme
 
 [Service]
 Type=simple
-ExecStart=/usr/local/bin/lighttheme
+ExecStart=/usr/local/bin/theme light
