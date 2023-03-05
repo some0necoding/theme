@@ -1,11 +1,11 @@
 #!/bin/bash
 #
-#		--------------- lighttheme ---------------
+#		----------------- theme -----------------
 #
 #		This script can be used both to manually
 #		set kde desktop theme to breeze (light) or 
-#		to specify the time when it will be set
-#		automatically.
+#		breeze dark or to specify the time when 
+#		they will be set automatically.
 #
 
 
@@ -14,6 +14,7 @@ LIGHTTHEME_TIMER="/home/${USER}/.config/systemd/user/lighttheme.timer"
 
 # TODO: make this variables editable by user.
 LIGHT_THEME="org.kde.breeze.desktop"
+DARK_THEME="org.kde.breezedark.desktop"
 
 CURRENT_THEME="/home/${USER}/.config/kdedefaults/package"
 
@@ -99,26 +100,42 @@ function set_theme() {
 
 }
 
-# If no arguments are provided the theme is changed to breeze light.
-[[ -z $1 ]] && { 
-	set_theme $LIGHT_THEME
-	exit 0
+# If no arguments are provided throw an error
+[[ -z $1 ]] && { echo no arguments were provided; exit 0; }
+
+# If one argument is provided it should be either light or dark.
+[[ -n $1 && -z $2 ]] && {
+
+	[[ $1 == "dark" ]] && {
+		set_theme $DARK_THEME
+		exit 0
+	}
+
+	[[ $1 == "light" ]] && {
+		set_theme $LIGHT_THEME
+		exit 0
+	}
+
+	echo invalid argument $1
+	exit 1
 }
 
-# If argument set is provided, light theme activation time is set.
-[[ -n $1 && -n $2 ]] && {
+# If a second argument set is provided, theme activation time is set.
+[[ -n $1 && -n $2 && -n $3 ]] && {
+
+	[[ $1 != "dark" && $1 != "light" ]] && { echo invalid argument $1; exit 1; }
 
 	# Check argument
-	[[ $1 == "set" ]] || { echo "Invalid command: $1"; exit 0; }
+	[[ $2 == "set" ]] || { echo "invalid argument $2"; exit 1; }
 
 	D_TIME=$(get_time $DARKTHEME_TIMER)
 
 	# If inserted date is equal to darktheme date, throw an error
-	[[ $2 != $D_TIME ]] || { echo "Light theme activation time cannot be the same as darktheme"; exit 0; }
+	[[ $3 != $D_TIME ]] || { echo "Light theme activation time cannot be the same as darktheme"; exit 0; }
 
 	# Set light theme activation time
-	set_time $LIGHTTHEME_TIMER $2 || exit 1
+	set_time $LIGHTTHEME_TIMER $3 || exit 1
 
-	echo "Light theme activation time successfully set to $2!"
+	echo "Light theme activation time successfully set to $3!"
 	exit 0
 }
