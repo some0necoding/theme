@@ -8,18 +8,15 @@
 
 packages=( "bash" "systemd" "sed" "grep" "plasma-workspace" "coreutils" )
 
-LIGHTTHEME_DST="/usr/local/bin/lighttheme"
-DARKTHEME_DST="/usr/local/bin/darktheme"
-
-LIGHTTHEME_SRC="./bin/lighttheme"
-DARKTHEME_SRC="./bin/darktheme"
+THEME_DST="/usr/local/bin/theme"
+THEME_SRC="./theme"
 
 SYSTEMD_DIR="/home/${USER}/.config/systemd/user"
 
-D_TIMER_SRC="./bin/darktheme.timer"
-L_TIMER_SRC="./bin/lighttheme.timer"
-D_SERVICE_SRC="./bin/darktheme.service"
-L_SERVICE_SRC="./bin/lighttheme.service"
+D_TIMER_SRC="./units/darktheme.timer"
+L_TIMER_SRC="./units/lighttheme.timer"
+D_SERVICE_SRC="./units/darktheme.service"
+L_SERVICE_SRC="./units/lighttheme.service"
 
 UNITS_SRC=( $D_TIMER_SRC $L_TIMER_SRC $D_SERVICE_SRC $L_SERVICE_SRC )
 
@@ -118,7 +115,6 @@ check_de || exit 1
 
 check_packages || exit 1
 
-install $LIGHTTHEME_SRC $LIGHTTHEME_DST || exit 1
-install $DARKTHEME_SRC  $DARKTHEME_DST || exit 1
+install $THEME_SRC $THEME_DST || exit 1
 
 install_units
