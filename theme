@@ -79,6 +79,9 @@ set_time() {
 	# If activation time has not changed, throw an error.
 	[[ $current_time != $2 ]] && { echo Cannot change light theme activation time; return 1; }
 
+	# Reload systemd units
+	systemctl --user daemon-reload
+
 	return 0
 }
 
@@ -89,9 +92,9 @@ set_time() {
 #
 function set_theme() {
 	
-	current_theme=$(cat $CURRENT_THEME)
+	local current_theme=$(cat $CURRENT_THEME)
 
-	while [[ $current_them != $1 ]]; do
+	while [[ $current_theme != $1 ]]; do
 
 		lookandfeeltool -a $1 &> /dev/null
 
