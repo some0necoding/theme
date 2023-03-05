@@ -129,14 +129,31 @@ function set_theme() {
 	# Check argument
 	[[ $2 == "set" ]] || { echo "invalid argument $2"; exit 1; }
 
-	D_TIME=$(get_time $DARKTHEME_TIMER)
+	[[ $1 == "dark" ]] && {
 
-	# If inserted date is equal to darktheme date, throw an error
-	[[ $3 != $D_TIME ]] || { echo "Light theme activation time cannot be the same as darktheme"; exit 0; }
+		L_TIME=$(get_time $LIGHTTHEME_TIMER)
 
-	# Set light theme activation time
-	set_time $LIGHTTHEME_TIMER $3 || exit 1
+		# If inserted date is equal to darktheme date, throw an error
+		[[ $3 != $L_TIME ]] || { echo "dark theme activation time cannot be the same as light theme"; exit 0; }
 
-	echo "Light theme activation time successfully set to $3!"
+		# Set light theme activation time
+		set_time $DARKTHEME_TIMER $3 || exit 1
+
+		echo "dark theme activation time successfully set to $3!"
+	}
+
+	[[ $1 == "light" ]] && {
+
+		D_TIME=$(get_time $DARKTHEME_TIMER)
+
+		# If inserted date is equal to darktheme date, throw an error
+		[[ $3 != $D_TIME ]] || { echo "light theme activation time cannot be the same as dark theme"; exit 0; }
+
+		# Set light theme activation time
+		set_time $LIGHTTHEME_TIMER $3 || exit 1
+
+		echo "light theme activation time successfully set to $3!"
+	}
+
 	exit 0
 }
