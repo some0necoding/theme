@@ -21,7 +21,7 @@ CURRENT_THEME="/home/${USER}/.config/kdedefaults/package"
 #
 #	SYNTAX:		get_time PATH_TO_TIMER
 #
-get_time() {
+function get_time() {
 
 	# Argument check
 	[[ -z $1 ]] && { echo "missing arguments"; return 1; }
@@ -48,7 +48,7 @@ get_time() {
 #
 #	SYNTAX:		set_time PATH_TO_TIMER TIME
 #
-set_time() {
+function set_time() {
 
 	# Argument check.
 	[[ -z $1 || -z $2 ]] && { echo "missing arguments"; return 1; }
