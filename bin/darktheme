@@ -80,20 +80,27 @@ function set_time() {
 	return 0
 }
 
-
-# If no arguments are provided the theme is changed to breeze dark.
-[[ -z $1 ]] && { 
+# Set theme ensuring it actually changes
+#
+#	SYNTAX:		set_theme THEME
+#
+function set_theme() {
 	
 	current_theme=$(cat $CURRENT_THEME)
 
-	while [[ $current_them != $DARK_THEME ]]; do
+	while [[ $current_them != $1 ]]; do
 
-		lookandfeeltool -a $DARK_THEME &> /dev/null; exit 0; 
+		lookandfeeltool -a $1 &> /dev/null; exit 0; 
 
 		current_theme=$(cat $CURRENT_THEME)
 
 	done
 
+}
+
+# If no arguments are provided the theme is changed to breeze dark.
+[[ -z $1 ]] && {
+	set_theme $DARK_THEME
 }
 
 # If argument set is provided, dark theme activation time is set.
