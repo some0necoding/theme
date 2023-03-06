@@ -31,6 +31,7 @@ HELP_MSG="Utility to handle dark/light theme changes.\n
 		  \040\040- get			\t\tget activation time for\n
 		  \040\040			  \t\t\tthe specified theme mode"
 
+
 #	Get theme activation time.
 #
 #	SYNTAX:		get_time PATH_TO_TIMER
@@ -115,6 +116,7 @@ function set_theme() {
 	done
 
 }
+
 
 # If no arguments are provided throw an error
 [[ -z $1 ]] && { 
