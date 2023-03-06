@@ -9,7 +9,6 @@
 #
 
 # TODO: add a -h/--help page
-# TODO: add a get command
 
 DARKTHEME_TIMER="/home/${USER}/.config/systemd/user/darktheme.timer"
 LIGHTTHEME_TIMER="/home/${USER}/.config/systemd/user/lighttheme.timer"
@@ -123,6 +122,19 @@ function set_theme() {
 
 	echo invalid argument $1
 	exit 1
+}
+
+# If a second argument get is provided, theme activation time is returned.
+[[ -n $1 && -n $2 && -z $3 ]] && {
+
+	[[ $1 != "dark" && $1 != "light" ]] && { echo invalid argument $1; exit 1; }
+
+	[[ $2 == "get" ]] || { echo invalid argument $2; exit 1; }
+
+	[[ $1 == "dark" ]] && { echo $(get_time $DARKTHEME_TIMER); exit 0; }
+
+	[[ $1 == "light" ]] && { echo $(get_time $LIGHTTHEME_TIMER); exit 0; }
+
 }
 
 # If a second argument set is provided, theme activation time is set.
