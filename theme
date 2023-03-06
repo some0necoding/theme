@@ -19,6 +19,19 @@ DARK_THEME="org.kde.breezedark.desktop"
 
 CURRENT_THEME="/home/${USER}/.config/kdedefaults/package"
 
+HELP_MSG="Utility to handle dark/light theme changes.\n
+		  \n
+		  SYNTAX:\n
+		  \ttheme MODE [COMMANDS]\n
+		  \n
+		  Commands:\n
+		  \n
+		  \040\040- set TIME	\t\tset activation time for\n
+		  \040\040			  \t\t\tthe specified theme mode\n
+		  \n
+		  \040\040- get			\t\tget activation time for\n
+		  \040\040			  \t\t\tthe specified theme mode"
+
 #	Get theme activation time.
 #
 #	SYNTAX:		get_time PATH_TO_TIMER
@@ -105,10 +118,19 @@ function set_theme() {
 }
 
 # If no arguments are provided throw an error
-[[ -z $1 ]] && { echo no arguments were provided; exit 0; }
+[[ -z $1 ]] && { 
+	echo -e "no arguments were provided.\n"
+	echo -e $HELP_MSG
+	exit 0 
+}
 
-# If one argument is provided it should be either light or dark.
+# If one argument is provided it should be either light, dark or -h/--help.
 [[ -n $1 && -z $2 ]] && {
+
+	[[ $1 == "-h" || $1 == "--help" ]] && {
+		echo -e $HELP_MSG
+		exit 0
+	}
 
 	[[ $1 == "dark" ]] && {
 		set_theme $DARK_THEME
