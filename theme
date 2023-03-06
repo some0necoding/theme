@@ -8,7 +8,6 @@
 #		they will be set automatically.
 #
 
-# TODO: add a -h/--help page
 
 DARKTHEME_TIMER="/home/${USER}/.config/systemd/user/darktheme.timer"
 LIGHTTHEME_TIMER="/home/${USER}/.config/systemd/user/lighttheme.timer"
