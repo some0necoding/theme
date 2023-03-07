@@ -2,7 +2,7 @@
 #
 #		---------------- install.sh ----------------
 #
-#		This script installs settheme utility.
+#		This script installs theme utility.
 #
 
 
@@ -24,7 +24,7 @@ UNITS_SRC=( $D_TIMER_SRC $L_TIMER_SRC $D_SERVICE_SRC $L_SERVICE_SRC )
 function check_de() {
 
 	[[ $XDG_CURRENT_DESKTOP != "KDE" || $DESKTOP_SESSION != "plasma" ]] && {
-		echo "settheme works only on KDE plasma desktop"
+		echo "theme works only on KDE plasma desktop"
 		return 1
 	}
 

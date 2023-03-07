@@ -47,7 +47,7 @@ get_time() {
 		return 1;
 	}
 
-	# Check if file ($1) exists. If not settheme is not installed.
+	# Check if file ($1) exists. If not theme is not installed.
 	[[ -e $1 ]] || { echo "$1 doesn't exist. You might have to run install.sh."; return 1; }
 
 	# Dark theme activation time
@@ -74,7 +74,7 @@ set_time() {
 		return 1;
 	}
 	
-	# Check if file ($1) exists. If not settheme is not installed.
+	# Check if file ($1) exists. If not theme is not installed.
 	[[ -e $1 ]] || { echo "$1 doesn't exist. You might have to run install.sh."; return 1; }
 
 	# Check good date format.
